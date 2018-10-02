@@ -24,6 +24,7 @@ def histogram_times(filename):
             value = re.search(r'[0-9][0-9]', time)
             output[int(value.group())] += 1
     csv_file.close()
+    return output
 
 
 def weigh_pokemons(filename, weight):
@@ -35,7 +36,7 @@ def weigh_pokemons(filename, weight):
         p_weight = re.search(r'(\d+)\.(\d+)', pokemon["weight"])
         if float(p_weight.group()) == float(weight):
             pokemons.append(pokemon['name'])
-    print(pokemons)
+    return pokemons
 
 
 def single_type_candy_count(filename):
@@ -51,18 +52,27 @@ def single_type_candy_count(filename):
                 num_candies += int(pokemon['candy_count'])
         except KeyError:
             pass
+    return candies
 
 
 def reflections_and_projections(points):
-    pass
+    transformed_points = np.copy(points)
+    pi_over_2 = np.array([[0, -1], [1, 0]])
+    scalar = 1/10
+    projection_array = np.array([[1, 3], [3, 9]])
+    transformed_points[1] = transformed_points[1] * (-1) + 2
+    transformed_points = pi_over_2 @ transformed_points
+    transformed_points = scalar * projection_array @ transformed_points
+    return transformed_points
 
 
+def normalize(image):
+    maxP = np.amax(image)
+    minP = np.amin(image)
+    new_image = 255/(maxP - minP)*image-minP
+    return new_image
 
-reflections_and_projections([[0, 0], [0, 1]])
 
-
-"""def normalize(image):
-    pass
-
-def sigmoid_normalize(image):
-    pass"""
+def sigmoid_normalize(image, a):
+    new_image = 255 * (1 + np.e**(-a**-1 * (image - 128)))**-1
+    return new_image
