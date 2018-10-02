@@ -32,9 +32,10 @@ def weigh_pokemons(filename, weight):
     json_file.close()
     pokemons = []
     for pokemon in pokedex["pokemon"]:
-        p_weight = re.search(r'[0-9]+\.[0-9]+', pokemon["weight"])
+        p_weight = re.search(r'(\d+)\.(\d+)', pokemon["weight"])
         if float(p_weight.group()) == float(weight):
             pokemons.append(pokemon['name'])
+    print(pokemons)
 
 
 def single_type_candy_count(filename):
@@ -53,14 +54,7 @@ def single_type_candy_count(filename):
 
 
 def reflections_and_projections(points):
-    transformed_points = np.array(points)
-    projection = 1/10 * np.array([1, 3], [3, 9])
-    for row in transformed_points:
-        row[1] = -row[1] + 2
-    print(transformed_points)
-    for row in range(len(transformed_points)):
-        transformed_points[row] = [-transformed_points[row][1], transformed_points[row][0]]
-    print(transformed_points)
+    pass
 
 
 
