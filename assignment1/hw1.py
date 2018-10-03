@@ -23,6 +23,7 @@ def histogram_times(filename):
         if time and re.search(r'[0-9][0-9]:', time):
             value = re.search(r'[0-9][0-9]', time)
             output[int(value.group())] += 1
+    print(output)
     csv_file.close()
     return output
 
@@ -36,8 +37,10 @@ def weigh_pokemons(filename, weight):
         p_weight = re.search(r'(\d+)\.(\d+)', pokemon["weight"])
         if float(p_weight.group()) == float(weight):
             pokemons.append(pokemon['name'])
+            print(pokemon['name'])
     return pokemons
 
+weigh_pokemons('pokedex.json', 122.0)
 
 def single_type_candy_count(filename):
     json_file = open(filename, "r", encoding="utf-8")
